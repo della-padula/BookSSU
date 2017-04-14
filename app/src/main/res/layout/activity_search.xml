@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.terry.librarysearch.SearchActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/content_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true">
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:text="숭실대학교 중앙도서관 도서 검색 어플리케이션"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11.6sp"
+            app:customFont="@string/naum_square_bold" />
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_subtitle"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_marginTop="6dp"
+            android:text="BookSSU"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            app:customFont="@string/naum_square_exbold" />
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="53dp"
+            app:srcCompat="@drawable/book" />
+
+        <com.terry.librarysearch.CustomView.CustomFontEditText
+            android:id="@+id/searchContent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/iv_logo"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="57dp"
+            android:background="@drawable/login_edittext_bg"
+            android:hint="검색어를 입력해주세요."
+            android:inputType="textPersonName"
+            android:textColor="#d8d8d8"
+            android:textColorHint="#d8d8d8"
+            android:textSize="14sp"
+            app:customFont="@string/naum_square_bold" />
+
+        <com.terry.librarysearch.CustomView.CustomFontButton
+            android:id="@+id/searchButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/searchContent"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/colorPrimary"
+            android:text="도서 검색"
+            android:textColor="@android:color/white"
+            app:customFont="@string/naum_square_bold" />
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchButton"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_marginTop="7dp"
+            android:text="Version 0.1.0"
+            android:textColor="#d8d8d8"
+            android:textSize="11.6sp"
+            app:customFont="@string/naum_square_bold" />
+
+
+    </RelativeLayout>
+
+    <com.terry.librarysearch.CustomView.CustomFontTextView
+        android:id="@+id/developer_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="9dp"
+        android:text="개발자 : 김태인(컴퓨터학부 14)"
+        android:textColor="#606060"
+        android:textSize="10sp"
+        app:customFont="@string/naum_square_regular" />
+
+</RelativeLayout>

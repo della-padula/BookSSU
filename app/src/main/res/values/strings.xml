@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LibrarySearch</string>
+
+    <!-- Font -->
+    <string name="naum_square_regular">fonts/NanumSquareOTFRegular.otf</string>
+    <string name="naum_square_bold">fonts/NanumSquareOTFBold.otf</string>
+    <string name="naum_square_exbold">fonts/NanumSquareOTFExtraBold.otf</string>
+</resources>
