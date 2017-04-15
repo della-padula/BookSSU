@@ -36,25 +36,25 @@ public class DataAdapter extends RecyclerView.Adapter {
                     .getLayoutManager();
 
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrolled(RecyclerView recyclerView,
-                                               int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
+                @Override
+                public void onScrolled(RecyclerView recyclerView,
+                                       int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
 
-                            totalItemCount = linearLayoutManager.getItemCount();
-                            lastVisibleItem = linearLayoutManager
-                                    .findLastVisibleItemPosition();
-                            if (!loading
-                                    && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                                // End has been reached
-                                // Do something
-                                if (onLoadMoreListener != null) {
-                                    onLoadMoreListener.onLoadMore();
-                                }
-                                loading = true;
-                            }
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    lastVisibleItem = linearLayoutManager
+                            .findLastVisibleItemPosition();
+                    if (!loading
+                            && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                        // End has been reached
+                        // Do something
+                        if (onLoadMoreListener != null) {
+                            onLoadMoreListener.onLoadMore();
                         }
-                    });
+                        loading = true;
+                    }
+                }
+            });
         }
     }
 
@@ -83,11 +83,11 @@ public class DataAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ResultItemViewHolder) {
-            ResultItem singleResultItem= (ResultItem) resultItemList.get(position);
+            ResultItem singleResultItem = (ResultItem) resultItemList.get(position);
             ((ResultItemViewHolder) holder).tvName.setText(singleResultItem.getBookTitle());
             ((ResultItemViewHolder) holder).tvAuthor.setText(singleResultItem.getBookAuthor());
             Glide.with(mContext).load(singleResultItem.getImageUrl()).into(((ResultItemViewHolder) holder).ivBookImage);
-            if(singleResultItem.getBookStatus().equals("이용가능")) {
+            if (singleResultItem.getBookStatus().equals("이용가능")) {
                 ((ResultItemViewHolder) holder).ivStatus.setImageResource(R.drawable.icon_1);
             } else {
                 ((ResultItemViewHolder) holder).ivStatus.setImageResource(R.drawable.icon_2);
@@ -100,6 +100,7 @@ public class DataAdapter extends RecyclerView.Adapter {
 
     public void setLoaded() {
         loading = false;
+
     }
 
     @Override
@@ -129,7 +130,7 @@ public class DataAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(v.getContext(),
-                            "OnClick :" + resultItem.getBookTitle() + " \n "+resultItem.getLinkUrl(),
+                            "OnClick :" + resultItem.getBookTitle() + " \n " + resultItem.getLinkUrl(),
                             Toast.LENGTH_SHORT).show();
                 }
             });

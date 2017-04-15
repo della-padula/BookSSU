@@ -77,6 +77,7 @@ public class ResultListActivity extends AppCompatActivity {
         mPlaceHolderTitle = (CustomFontTextView) findViewById(R.id.textView2);
         mPlaceHolderContent = (CustomFontTextView) findViewById(R.id.textView3);
         resultItemList = new ArrayList<>();
+        resultItemList.clear();
 
         getResultList();
         initializeRecyclerView();
@@ -89,6 +90,9 @@ public class ResultListActivity extends AppCompatActivity {
 
         mAdapter = new DataAdapter(resultItemList, mRecyclerView, this);
         mRecyclerView.setAdapter(mAdapter);
+        Log.d(TAG, "initializeRecyclerView: " + resultItemList.size());
+        //resultItemList.remove(resultItemList.size() - 1);
+        mAdapter.setLoaded();
 
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -96,17 +100,11 @@ public class ResultListActivity extends AppCompatActivity {
                 //add null , so the adapter will check view_type and show progress bar at bottom
                 resultItemList.add(null);
                 mAdapter.notifyItemInserted(resultItemList.size() - 1);
-
-                isLoadMore = true;
-
-                if(page < totalItemCount / loadedItemCount + 1) {
+                if(page < totalItemCount / loadedItemCount) {
                     // Page Increase;
                     page++;
-
-
                     resultItemList.remove(resultItemList.size() - 1);
                     mAdapter.notifyItemRemoved(resultItemList.size());
-
                     new GetHtmlText().execute();
                 }
 
@@ -215,10 +213,7 @@ public class ResultListActivity extends AppCompatActivity {
                 }
 
                 mAdapter.notifyDataSetChanged();
-
-                if (isLoadMore) {
-                    mAdapter.setLoaded();
-                }
+                mAdapter.setLoaded();
             }
         }
     }
