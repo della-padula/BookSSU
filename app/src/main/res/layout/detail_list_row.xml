@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:selectableItemBackground"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="false"
+        android:layout_toEndOf="@+id/ivBook"
+        android:background="@drawable/detail_item_bg"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/ivStatus"
+            android:layout_width="36dp"
+            android:layout_height="14dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tvCodeLocation"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="9dp"
+            app:srcCompat="@drawable/icon_1" />
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tvCodeLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="7dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="E123412 2층 자연과학실"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:customFont="@string/naum_square_bold" />
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tvChunggu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCodeLocation"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="005.133J1 남 1765J"
+            android:textColor="#707070"
+            android:textSize="18sp"
+            app:customFont="@string/naum_square_regular" />
+    </RelativeLayout>
+
+</RelativeLayout>

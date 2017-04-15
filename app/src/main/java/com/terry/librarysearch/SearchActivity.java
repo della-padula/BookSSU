@@ -45,10 +45,9 @@ public class SearchActivity extends AppCompatActivity {
                     Typeface face= Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
                     textView.setTypeface(face);
                     textView2.setTypeface(face);
-
                 } else {
                     Intent intent = new Intent(SearchActivity.this, ResultListActivity.class);
-                    intent.putExtra("content", searchContent.getText().toString().replaceAll(" ", "+"));
+                    intent.putExtra("content", searchContent.getText().toString());
                     searchContent.setText("");
                     startActivity(intent);
                 }

@@ -39,13 +39,13 @@
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_alignParentBottom="false"
-                android:layout_below="@+id/tvAuthor"
+                android:layout_below="@+id/tvChunggu"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 card_view:srcCompat="@drawable/icon_1" />
 
             <com.terry.librarysearch.CustomView.CustomFontTextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvCodeLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
@@ -59,10 +59,10 @@
                 app:customFont="@string/naum_square_bold" />
 
             <com.terry.librarysearch.CustomView.CustomFontTextView
-                android:id="@+id/tvAuthor"
+                android:id="@+id/tvChunggu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvName"
+                android:layout_below="@+id/tvCodeLocation"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="17dp"
                 android:layout_marginTop="5dp"

@@ -1,7 +1,6 @@
 package com.terry.librarysearch;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.terry.librarysearch.CustomView.CustomFontTextView;
@@ -123,8 +121,8 @@ public class DataAdapter extends RecyclerView.Adapter {
 
         public ResultItemViewHolder(View v) {
             super(v);
-            tvName = (CustomFontTextView) v.findViewById(R.id.tvName);
-            tvAuthor = (CustomFontTextView) v.findViewById(R.id.tvAuthor);
+            tvName = (CustomFontTextView) v.findViewById(R.id.tvCodeLocation);
+            tvAuthor = (CustomFontTextView) v.findViewById(R.id.tvChunggu);
             ivBookImage = (ImageView) v.findViewById(R.id.ivBook);
             ivStatus = (ImageView) v.findViewById(R.id.ivStatus);
 
