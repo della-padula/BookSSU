@@ -19,11 +19,14 @@
 
     <com.terry.librarysearch.CustomView.CustomFontTextView
         android:id="@+id/tv_booktitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/book_image"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
         android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
         android:text="TextView"
         android:textColor="#101010"
         android:textSize="18dp"
@@ -34,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_booktitle"
-        android:layout_marginLeft="27dp"
-        android:layout_marginRight="27dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
         android:layout_marginTop="14dp"
         android:orientation="horizontal">
 
@@ -146,18 +149,46 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="155dp"
         android:layout_below="@+id/textView13"
         android:layout_marginBottom="22dp"
-        android:layout_marginLeft="27dp"
-        android:layout_marginRight="27dp"
-        android:layout_marginTop="11dp">
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/detail_list_layout_bg"
+        android:orientation="vertical"
+        android:paddingBottom="6dp">
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/detail_detail_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="로딩중입니다"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:customFont="@string/naum_square_bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/detail_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:visibility="gone" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#00ffffff"
+        android:padding="4dp"
+        android:src="@drawable/ic_clear_black_48_dp"
+        app:srcCompat="@drawable/ic_clear_black_48_dp" />
 </RelativeLayout>

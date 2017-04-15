@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:selectableItemBackground"
-    android:padding="10dp">
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="7dp">
 
     <RelativeLayout
         android:id="@+id/content_layout"
@@ -21,7 +23,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/tvCodeLocation"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="9dp"
+            android:layout_marginRight="7dp"
             app:srcCompat="@drawable/icon_1" />
 
         <com.terry.librarysearch.CustomView.CustomFontTextView
@@ -44,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCodeLocation"
             android:layout_marginBottom="7dp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="7dp"
             android:layout_marginRight="17dp"
             android:layout_marginTop="5dp"
             android:ellipsize="end"

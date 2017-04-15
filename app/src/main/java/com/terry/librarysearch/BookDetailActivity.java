@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class BookDetailActivity extends Activity {
@@ -32,6 +32,7 @@ public class BookDetailActivity extends Activity {
     private ArrayList<DetailItem> detailItemList;
     private String TAG = "TAG";
     private ImageView bookImage;
+    private ImageButton closeButton;
     private RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -41,6 +42,8 @@ public class BookDetailActivity extends Activity {
     private TextView tvBalheng;
     private TextView tvChunggu;
     private TextView tvISBN;
+    private TextView tvStatusCount;
+    private TextView tvPlaceHolder;
 
     private String bookCode;
     private String bookImageUrl;
@@ -54,11 +57,21 @@ public class BookDetailActivity extends Activity {
 
         bookImage = (ImageView) findViewById(R.id.book_image);
         tvTitle = (TextView) findViewById(R.id.tv_booktitle);
+        tvStatusCount = (TextView) findViewById(R.id.textView13);
         tvAuthor = (TextView) findViewById(R.id.textView12);
         tvBalheng = (TextView) findViewById(R.id.textView11);
         tvChunggu = (TextView) findViewById(R.id.textView10);
+        tvPlaceHolder = (TextView) findViewById(R.id.detail_detail_placeholder);
+        closeButton = (ImageButton) findViewById(R.id.imageButton);
         mRecyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
         tvISBN = (TextView) findViewById(R.id.textView9);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         bookCode = intent.getStringExtra("bookLinkUrl");
@@ -72,6 +85,15 @@ public class BookDetailActivity extends Activity {
 
         getDetailData();
         initializeRecyclerView();
+
+        if(detailItemList.isEmpty()) {
+            tvPlaceHolder.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else{
+            tvPlaceHolder.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void getDetailData() {
@@ -91,14 +113,16 @@ public class BookDetailActivity extends Activity {
         for (int i = start; i < list.size(); ++i) {
             if (list.get(i).startsWith("E")) {
                 Log.d(TAG, "applyLandDetail: " + list.get(i));
-                detailItemList.add(new DetailItem(list.get(++i), list.get(++i), list.get(++i), list.get(++i)));
+                detailItemList.add(new DetailItem(list.get(i), list.get(++i), list.get(++i), list.get(++i)));
+                mAdapter.notifyItemInserted(detailItemList.size());
             }
+            mAdapter.notifyDataSetChanged();
         }
     }
 
     private void initializeRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new MyAdapter(detailItemList, this);
@@ -196,6 +220,15 @@ public class BookDetailActivity extends Activity {
 
             applyLandDetail(bookDetail);
             applyToView(bookDetail);
+
+            if(detailItemList.isEmpty()) {
+                tvPlaceHolder.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+            } else{
+                tvStatusCount.setText("대출정보 : " + detailItemList.size() + "건");
+                tvPlaceHolder.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
