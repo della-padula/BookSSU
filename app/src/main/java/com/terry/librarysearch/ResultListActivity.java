@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -90,9 +91,6 @@ public class ResultListActivity extends AppCompatActivity {
 
         mAdapter = new DataAdapter(resultItemList, mRecyclerView, this);
         mRecyclerView.setAdapter(mAdapter);
-        Log.d(TAG, "initializeRecyclerView: " + resultItemList.size());
-        //resultItemList.remove(resultItemList.size() - 1);
-        mAdapter.setLoaded();
 
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override

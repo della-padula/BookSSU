@@ -116,7 +116,8 @@
                 android:layout_marginTop="9dp"
                 android:text="TextView"
                 android:textColor="#808080"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                app:customFont="@string/naum_square_regular" />
 
             <com.terry.librarysearch.CustomView.CustomFontTextView
                 android:id="@+id/textView9"

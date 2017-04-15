@@ -1,6 +1,8 @@
 package com.terry.librarysearch;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,11 +26,11 @@ public class DataAdapter extends RecyclerView.Adapter {
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
-    private Context mContext;
+    public Activity activity;
 
-    public DataAdapter(List<ResultItem> students, RecyclerView recyclerView, Context mContext) {
+    public DataAdapter(List<ResultItem> students, RecyclerView recyclerView, Activity activity) {
         resultItemList = students;
-        this.mContext = mContext;
+        this.activity = activity;
 
         if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
@@ -86,7 +88,7 @@ public class DataAdapter extends RecyclerView.Adapter {
             ResultItem singleResultItem = (ResultItem) resultItemList.get(position);
             ((ResultItemViewHolder) holder).tvName.setText(singleResultItem.getBookTitle());
             ((ResultItemViewHolder) holder).tvAuthor.setText(singleResultItem.getBookAuthor());
-            Glide.with(mContext).load(singleResultItem.getImageUrl()).into(((ResultItemViewHolder) holder).ivBookImage);
+            Glide.with(activity).load(singleResultItem.getImageUrl()).into(((ResultItemViewHolder) holder).ivBookImage);
             if (singleResultItem.getBookStatus().equals("이용가능")) {
                 ((ResultItemViewHolder) holder).ivStatus.setImageResource(R.drawable.icon_1);
             } else {
@@ -112,7 +114,7 @@ public class DataAdapter extends RecyclerView.Adapter {
         this.onLoadMoreListener = onLoadMoreListener;
     }
 
-    public static class ResultItemViewHolder extends RecyclerView.ViewHolder {
+    public class ResultItemViewHolder extends RecyclerView.ViewHolder {
         public CustomFontTextView tvName;
         public CustomFontTextView tvAuthor;
         public ImageView ivBookImage;
@@ -132,6 +134,10 @@ public class DataAdapter extends RecyclerView.Adapter {
                     Toast.makeText(v.getContext(),
                             "OnClick :" + resultItem.getBookTitle() + " \n " + resultItem.getLinkUrl(),
                             Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(activity, BookDetailActivity.class);
+                    intent.putExtra("bookLinkUrl", resultItem.getLinkUrl());
+                    activity.startActivity(intent);
                 }
             });
         }

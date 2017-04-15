@@ -26,7 +26,8 @@
         <activity
             android:name=".ResultListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".BookDetailActivity"></activity>
+        <activity android:name=".BookDetailActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>
