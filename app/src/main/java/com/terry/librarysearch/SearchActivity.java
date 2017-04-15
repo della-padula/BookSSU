@@ -1,5 +1,6 @@
 package com.terry.librarysearch;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,11 +12,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.net.CookieHandler;
+import java.net.CookiePolicy;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -43,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
 
         }
 
+        final Context context = this;
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +79,71 @@ public class SearchActivity extends AppCompatActivity {
                     Typeface face= Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
                     textView.setTypeface(face);
                     textView2.setTypeface(face);
+
+                    CookieManager.getInstance().setAcceptCookie(true);
+                    WebkitCookieManagerProxy webkitCookieManagerProxy = new WebkitCookieManagerProxy(null, CookiePolicy.ACCEPT_ALL);
+                    CookieHandler.setDefault(webkitCookieManagerProxy);
+
+                    final RequestQueue requestQueue = Volley.newRequestQueue(context);
+                    requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Document document = Jsoup.parse(response);
+                            Element table = document.select("table.tbl_diary").first();
+                            if (table != null) {
+                                // TODO: 얻어온 세미나룸 목록 처리
+                            } else {
+                                requestQueue.add(new StringRequest(Request.Method.POST, "http://oasis.ssu.ac.kr/m/identity/Login.ax", new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Document document = Jsoup.parse(response);
+                                        Element form = document.select("form[name=frmDamonmedia]").first();
+                                        String action = form.attr("action");
+                                        final Elements inputs = form.select("input");
+                                        requestQueue.add(new StringRequest(Request.Method.POST, action, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/m/PyxisRedirect.ax?home=http://oasis.ssu.ac.kr&target=/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        final String SPLITTER = "location.href=\"";
+                                                        int start = response.indexOf(SPLITTER) + SPLITTER.length();
+                                                        int end = response.indexOf("\"", start);
+                                                        response = response.substring(start, end);
+
+                                                        requestQueue.add(new StringRequest(Request.Method.GET, response, new Response.Listener<String>() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                // TODO: 로그인 완료 처리
+                                                            }
+                                                        }, null));
+                                                    }
+                                                }, null));
+                                            }
+                                        }, null) {
+                                            @Override
+                                            protected Map<String,String> getParams(){
+                                                Map<String, String> params = new HashMap<String, String>();
+                                                for (Element input : inputs) {
+                                                    params.put(input.attr("name"), input.attr("value"));
+                                                }
+                                                return params;
+                                            }
+                                        });
+                                    }
+                                }, null) {
+                                    @Override
+                                    protected Map<String,String> getParams(){
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("userID", "학번");
+                                        params.put("password", "비밀번호");
+                                        params.put("LOGIN_MODE", "LOGIN");
+                                        return params;
+                                    }
+                                });
+                            }
+                        }
+                    }, null));
                 } else {
                     Intent intent = new Intent(SearchActivity.this, ResultListActivity.class);
                     intent.putExtra("content", searchContent.getText().toString());
