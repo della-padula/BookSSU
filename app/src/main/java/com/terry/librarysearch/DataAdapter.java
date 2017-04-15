@@ -20,7 +20,7 @@ public class DataAdapter extends RecyclerView.Adapter {
     private final int VIEW_PROG = 0;
 
     private List<ResultItem> resultItemList;
-    private int visibleThreshold = 5;
+    private int visibleThreshold = 1;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
@@ -89,6 +89,8 @@ public class DataAdapter extends RecyclerView.Adapter {
             Glide.with(activity).load(singleResultItem.getImageUrl()).into(((ResultItemViewHolder) holder).ivBookImage);
             if (singleResultItem.getBookStatus().equals("이용가능")) {
                 ((ResultItemViewHolder) holder).ivStatus.setImageResource(R.drawable.icon_1);
+            } else if(singleResultItem.getBookStatus().equals("")) {
+                ((ResultItemViewHolder) holder).ivStatus.setVisibility(View.INVISIBLE);
             } else {
                 ((ResultItemViewHolder) holder).ivStatus.setImageResource(R.drawable.icon_2);
             }

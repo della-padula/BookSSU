@@ -1,6 +1,7 @@
 package com.terry.librarysearch;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -11,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -133,13 +137,14 @@ public class ResultListActivity extends AppCompatActivity {
 
     private class GetHtmlText extends AsyncTask<Void, Void, String> {
         Document doc;
-        Elements text, textImgUrl, hrefs, circstats, countText, author;
+        Elements text, textImgUrl, hrefs, circstats, countText, author, cname;
 
         ArrayList<String> titleList = new ArrayList<>();
         ArrayList<String> statusList = new ArrayList<>();
         ArrayList<String> linkList = new ArrayList<>();
         ArrayList<String> imageUrlList = new ArrayList<>();
         ArrayList<String> authorList = new ArrayList<>();
+        ArrayList<String> cnameList = new ArrayList<>();
 
         @Override
         protected String doInBackground(Void... params) {
@@ -152,6 +157,7 @@ public class ResultListActivity extends AppCompatActivity {
                 text = doc.select("span.title a");
                 hrefs = doc.select("span.title a[href]");
                 textImgUrl = doc.select("dd.thumb img");
+                cname = doc.select("dd.info span.cname");
                 circstats = doc.select("span.circstat");
                 countText = doc.select("h3.stitle");
                 author = doc.select("div.search_result_brief_contents");
@@ -166,6 +172,7 @@ public class ResultListActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String str) {
+            int count = 0;
             for(Element e : countText) {
                 StringTokenizer st = new StringTokenizer(e.text().toString().replaceAll("\\D+"," "));
 
@@ -176,8 +183,20 @@ public class ResultListActivity extends AppCompatActivity {
             for(Element e : circstats)
                 statusList.add(e.text().toString());
 
+            for(Element e : cname) {
+                cnameList.add(e.text().toString());
+                if(e.text().toString().equals("E-book")) {
+                    statusList.add(count, "");
+                }
+                count++;
+            }
+
             for(Element e : text)
                 titleList.add(e.text().toString());
+
+            for(String strstr : statusList) {
+                Log.d(TAG, "onPostExecute: Status StrStr : " + strstr);
+            }
 
             for(Element e : author) {
                 StringTokenizer st = new StringTokenizer(e.text().toString(), "/");
@@ -214,8 +233,6 @@ public class ResultListActivity extends AppCompatActivity {
                 mRecyclerView.setVisibility(View.GONE);
                 mRelativeLayout.setVisibility(View.VISIBLE);
             } else {
-                mPlaceHolderTitle.setText("검색중입니다!");
-                mPlaceHolderContent.setText("잠시만 기다려주세요.");
                 mRecyclerView.setVisibility(View.VISIBLE);
                 mRelativeLayout.setVisibility(View.GONE);
 
