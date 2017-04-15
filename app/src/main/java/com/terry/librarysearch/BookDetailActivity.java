@@ -5,22 +5,27 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class BookDetailActivity extends AppCompatActivity {
 
     private String TAG = "TAG";
-    String bookCode;
+    private ImageView bookImage;
+    private TextView tvAuthor;
+    private String bookCode;
+    private String bookImageUrl;
+    private String bookTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,29 +33,31 @@ public class BookDetailActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_book_detail);
 
+        bookImage = (ImageView) findViewById(R.id.book_image);
+        tvAuthor = (TextView) findViewById(R.id.tv_booktitle);
+
         Intent intent = getIntent();
         bookCode = intent.getStringExtra("bookLinkUrl");
+        bookImageUrl = intent.getStringExtra("bookImageUrl");
+        bookTitle = intent.getStringExtra("bookTitle");
+
+        Glide.with(this).load(bookImageUrl).into(bookImage);
+        tvAuthor.setText(bookTitle);
 
         new GetHtmlText().execute();
     }
 
     private class GetHtmlText extends AsyncTask<Void, Void, String> {
         Document doc;
-        Elements text, textImgUrl, hrefs, circstats, countText, author;
-
-        ArrayList<String> titleList = new ArrayList<>();
-        ArrayList<String> statusList = new ArrayList<>();
-        ArrayList<String> linkList = new ArrayList<>();
-        ArrayList<String> imageUrlList = new ArrayList<>();
-        ArrayList<String> authorList = new ArrayList<>();
+        Elements text;
 
         @Override
         protected String doInBackground(Void... params) {
             try {
-                String url = "http://oasis.ssu.ac.kr/search/" + bookCode;
+                String url = bookCode;
 
                 doc = Jsoup.connect(url).get();
-                text = doc.select("tdoby td");
+                text = doc.select("tbody td");
 
             } catch (IOException e) {
                 e.printStackTrace();

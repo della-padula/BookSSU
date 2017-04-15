@@ -131,12 +131,10 @@ public class DataAdapter extends RecyclerView.Adapter {
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(),
-                            "OnClick :" + resultItem.getBookTitle() + " \n " + resultItem.getLinkUrl(),
-                            Toast.LENGTH_SHORT).show();
-
                     Intent intent = new Intent(activity, BookDetailActivity.class);
                     intent.putExtra("bookLinkUrl", resultItem.getLinkUrl());
+                    intent.putExtra("bookImageUrl", resultItem.getImageUrl());
+                    intent.putExtra("bookTitle", resultItem.getBookTitle());
                     activity.startActivity(intent);
                 }
             });
@@ -145,7 +143,6 @@ public class DataAdapter extends RecyclerView.Adapter {
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
-
         public ProgressViewHolder(View v) {
             super(v);
             progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
