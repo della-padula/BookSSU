@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -26,6 +27,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 public class BookDetailActivity extends Activity {
 
@@ -111,7 +113,7 @@ public class BookDetailActivity extends Activity {
         }
         // 대출정보 받아오기
         for (int i = start; i < list.size(); ++i) {
-            if (list.get(i).startsWith("E")) {
+            if (Pattern.matches("([A-Z]{1})([0-9]{1,8})", list.get(i))) {
                 Log.d(TAG, "applyLandDetail: " + list.get(i));
                 detailItemList.add(new DetailItem(list.get(i), list.get(++i), list.get(++i), list.get(++i)));
                 mAdapter.notifyItemInserted(detailItemList.size());
@@ -206,6 +208,9 @@ public class BookDetailActivity extends Activity {
                 text = doc.select("tbody td");
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NullPointerException ne) {
+                Toast.makeText(BookDetailActivity.this, "서버 요청 시간 초과", Toast.LENGTH_SHORT).show();
+                finish();
             }
             return null;
         }
@@ -222,6 +227,7 @@ public class BookDetailActivity extends Activity {
             applyToView(bookDetail);
 
             if(detailItemList.isEmpty()) {
+                tvPlaceHolder.setText("대출 정보가 없습니다.");
                 tvPlaceHolder.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
             } else{

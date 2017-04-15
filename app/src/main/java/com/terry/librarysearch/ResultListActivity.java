@@ -1,5 +1,6 @@
 package com.terry.librarysearch;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -96,13 +97,9 @@ public class ResultListActivity extends AppCompatActivity {
             @Override
             public void onLoadMore() {
                 //add null , so the adapter will check view_type and show progress bar at bottom
-                resultItemList.add(null);
-                mAdapter.notifyItemInserted(resultItemList.size() - 1);
                 if(page < totalItemCount / loadedItemCount) {
                     // Page Increase;
                     page++;
-                    resultItemList.remove(resultItemList.size() - 1);
-                    mAdapter.notifyItemRemoved(resultItemList.size());
                     new GetHtmlText().execute();
                 }
 
@@ -111,7 +108,6 @@ public class ResultListActivity extends AppCompatActivity {
     }
 
     private void getResultList() {
-        Log.d(TAG, "getResultList: Method Start");
         new GetHtmlText().execute();
     }
 
@@ -139,18 +135,21 @@ public class ResultListActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                String url = "http://oasis.ssu.ac.kr/search/Search.Result.ax?sid=1&mf=true&q=ALL%3A" + content + "&eq=&qt=&qf=" + content + "&f=&br=&cl=1+2+60+3+4+5+6+9+10+50+51+54+33+34+55+11+12+13+14+15+16+17+18+21+22+53+52+57+58&gr=1+2+3+4+8+7+5+9+14+15&rl=&page=" + page + "&pageSize=&h=&cr=&py=&subj=&facet=&nd=&tabID=&formaction=true&item=ALL&value=" + content;
-
-                doc = Jsoup.connect(url).get();
+                String url = "http://oasis.ssu.ac.kr/search/Search.Result.ax?sid=2&mf=true&q=ALL%3A" + content + "%3A1&eq=&qt=&qf=" + content + "&f=&br=&cl=1+2+60&gr=1&rl=&page=" + page + "pageSize=&h=&cr=&py=&subj=&facet=&nd=&tabID=&formaction=true&item=ALL&value=" + content;
+                //String url = "http://oasis.ssu.ac.kr/search/Search.Result.ax?sid=2&q=ALL%3A" + content + "%3A1&mf=true&qf=" + content + "&cl=1%202%2060&gr=1&vid=1&page=" + page;
+                //String url = "http://oasis.ssu.ac.kr/search/Search.Result.ax?sid=1&mf=true&q=ALL%3A" + content + "&eq=&qt=&qf=" + content + "&f=&br=&cl=1+2+60+3+4+5+6+9+10+50+51+54+33+34+55+11+12+13+14+15+16+17+18+21+22+53+52+57+58&gr=1+2+3+4+8+7+5+9+14+15&rl=&page=" + page + "&pageSize=&h=&cr=&py=&subj=&facet=&nd=&tabID=&formaction=true&item=ALL&value=" + content;
+                doc = Jsoup.connect(url).timeout(3000).get();
                 text = doc.select("span.title a");
                 hrefs = doc.select("span.title a[href]");
                 textImgUrl = doc.select("dd.thumb img");
                 circstats = doc.select("span.circstat");
                 countText = doc.select("h3.stitle");
                 author = doc.select("div.search_result_brief_contents");
-
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NullPointerException ne) {
+                Toast.makeText(ResultListActivity.this, "서버 요청 시간 초과", Toast.LENGTH_SHORT).show();
+                finish();
             }
             return null;
         }
@@ -173,19 +172,24 @@ public class ResultListActivity extends AppCompatActivity {
             for(Element e : author) {
                 StringTokenizer st = new StringTokenizer(e.text().toString(), "/");
                 // First Token is Title
-                st.nextToken();
+                String tempStr = st.nextToken();
 
-                StringTokenizer st2 = new StringTokenizer(st.nextToken(), ",");
-
-                String authorString = "";
-                int tokenizerCount = 0;
-                while(st2.hasMoreTokens()) {
-                    if(tokenizerCount < 3) {
-                        authorString += st2.nextToken();
-                        tokenizerCount++;
+                if(st.hasMoreTokens()) {
+                    StringTokenizer st2 = new StringTokenizer(st.nextToken(), ",");
+                    String authorString = "";
+                    int tokenizerCount = 0;
+                    while (st2.hasMoreTokens()) {
+                        if (tokenizerCount < 3) {
+                            authorString += st2.nextToken();
+                            tokenizerCount++;
+                        } else {
+                            break;
+                        }
                     }
+                    authorList.add(authorString);
+                } else {
+                    authorList.add(tempStr);
                 }
-                authorList.add(authorString);
             }
 
             for(Element e : hrefs)
