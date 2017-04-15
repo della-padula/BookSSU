@@ -27,9 +27,9 @@ public class SearchActivity extends AppCompatActivity {
                 if(searchContent.getText().toString().equals("")) {
                     Toast.makeText(SearchActivity.this, "검색어를 입력해주세요", Toast.LENGTH_SHORT).show();
                 } else {
-                    searchContent.setText("");
-                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SearchActivity.this, ResultListActivity.class);
                     intent.putExtra("content", searchContent.getText().toString().replaceAll(" ", "+"));
+                    searchContent.setText("");
                     startActivity(intent);
                 }
             }

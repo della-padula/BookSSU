@@ -1,9 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.terry.librarysearch.ResultListActivity">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="false"
+                app:srcCompat="@drawable/book" />
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="검색중입니다"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:customFont="@string/naum_square_bold" />
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:text="잠시만 기다려주세요"
+                android:textColor="#a8a8a8"
+                android:textSize="13.3sp"
+                app:customFont="@string/naum_square_regular" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
