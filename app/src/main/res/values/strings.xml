@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LibrarySearch</string>
+    <string name="app_name">BookSSU</string>
 
     <!-- Font -->
     <string name="naum_square_regular">fonts/NanumSquareOTFRegular.otf</string>
