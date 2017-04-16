@@ -92,10 +92,14 @@ public class ReserveActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.ib_date)
-    public void showDateSelectDialog() {
-        // Date Select 눌렀을 경우
+    @OnClick(R.id.tv_selected_date)
+    public void onClickSelectedDate() {
+        DatePickerDialog dialog = new DatePickerDialog(this, listener, year, month, date);
+        dialog.show();
+    }
 
+    @OnClick(R.id.ib_date)
+    public void onClickDate() {
         DatePickerDialog dialog = new DatePickerDialog(this, listener, year, month, date);
         dialog.show();
     }
