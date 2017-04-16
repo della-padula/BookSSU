@@ -19,7 +19,9 @@ import com.terry.librarysearch.utils.VolleySingleton;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -28,6 +30,9 @@ import butterknife.OnClick;
 
 public class LoginActivity extends Activity {
     private static final String STUDYROOM_URL = "http://oasis.ssu.ac.kr/service/StudyRoom.Cal.ax";
+    private static final String LOGIN_URL = "http://oasis.ssu.ac.kr/m/identity/Login.ax";
+    private static final String REDIRECT_URL = "http://oasis.ssu.ac.kr/m/PyxisRedirect.ax?home=http://oasis.ssu.ac.kr&target=/service/StudyRoom.Cal.ax";
+    private static final String SPLITTER = "location.href=\"";
 
     @BindView(R.id.idContent)
     CustomFontEditText idEditText;
@@ -113,9 +118,64 @@ public class LoginActivity extends Activity {
                     }).setCancelable(false).show();
         }
 
-        this.login(username, password);
+        this.login(username, password, new ResponseCallback() {
+            @Override
+            public void onSuccess(boolean success) {
+                if (success) {
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setMessage("로그인이 완료되었습니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).setCancelable(false).show();
+                }
+            }
+
+            @Override
+            public void onResponse(String response) {
+            }
+        });
     }
 
-    private void login(String username, String password) {
+    private void login(String username, String password, final ResponseCallback responseCallback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userID", username);
+        params.put("password", password);
+        params.put("LOGIN_MODE", "LOGIN");
+
+        post(LOGIN_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Document document = Jsoup.parse(response);
+                Element form = document.select("form[name=frmDamonmedia]").first();
+                String action = form.attr("action");
+                final Elements inputs = form.select("input");
+                Map<String, String> params = new HashMap<String, String>();
+                for (Element input : inputs) {
+                    params.put(input.attr("name"), input.attr("value"));
+                }
+
+                post(action, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        get(REDIRECT_URL, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                int start = response.indexOf(SPLITTER) + SPLITTER.length();
+                                int end = response.indexOf("\"", start);
+                                String url = response.substring(start, end);
+                                get(url, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        responseCallback.onSuccess(true);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, params);
+            }
+        }, params);
     }
 }
