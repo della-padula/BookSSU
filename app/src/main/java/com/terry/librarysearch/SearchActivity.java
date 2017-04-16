@@ -87,6 +87,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(boolean success) {
                 if (success) {
+                    startActivity(new Intent(SearchActivity.this, ReserveActivity.class));
                 } else {
                     startActivity(new Intent(SearchActivity.this, LoginActivity.class));
                 }
