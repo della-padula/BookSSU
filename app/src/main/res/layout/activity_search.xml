@@ -124,7 +124,7 @@
         app:customFont="@string/naum_square_regular" />
 
     <com.terry.librarysearch.CustomView.CustomFontButton
-        android:id="@+id/button"
+        android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/content_layout"

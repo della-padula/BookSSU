@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class SearchActivity extends AppCompatActivity {
     CustomFontButton searchButton;
     @BindView(R.id.reserveButton)
     CustomFontButton reserveBtn;
+    @BindView(R.id.logoutButton)
+    CustomFontButton logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,29 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reserveBtn.setEnabled(true);
+        isLogin(new LoginActivity.ResponseCallback() {
+            @Override
+            public void onSuccess(boolean success) {
+                if (success) {
+                    logoutButton.setVisibility(View.VISIBLE);
+                } else {
+                    logoutButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onResponse(String response) {
+            }
+        });
+    }
+
     @OnClick(R.id.reserveButton)
     public void onReserveProcess() {
+        reserveBtn.setEnabled(false);
         isLogin(new LoginActivity.ResponseCallback() {
             @Override
             public void onSuccess(boolean success) {
