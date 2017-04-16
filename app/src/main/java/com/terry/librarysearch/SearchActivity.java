@@ -36,6 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.terry.librarysearch.LoginActivity.isLogin;
+
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
@@ -162,9 +164,20 @@ public class SearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.reserveButton)
     public void onReserveProcess() {
-        Log.d(TAG, "onReserveProcess: Start");
-        //Dummy Code : Open Login Activity
-        startActivity(new Intent(SearchActivity.this, LoginActivity.class));
+        isLogin(new LoginActivity.ResponseCallback() {
+            @Override
+            public void onSuccess(boolean success) {
+                if (success) {
+                } else {
+                    startActivity(new Intent(SearchActivity.this, LoginActivity.class));
+                }
+            }
+
+            @Override
+            public void onResponse(String response) {
+            }
+        });
+
     }
 
     @Override
