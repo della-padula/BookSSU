@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.Window;
 import android.widget.EditText;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -18,6 +19,8 @@ import com.terry.librarysearch.utils.VolleySingleton;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,17 +46,22 @@ public class LoginActivity extends Activity {
         pwEditText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
     }
 
-    static protected StringRequest getStringRequest(int method, String url, Response.Listener<String> listener) {
-        return new StringRequest(method, url, listener, null);
+    static protected StringRequest getStringRequest(int method, String url, Response.Listener<String> listener, final Map<String, String> params) {
+        return new StringRequest(method, url, listener, null) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
     }
 
     static protected void get(String url, Response.Listener<String> listener) {
-        StringRequest stringRequest = getStringRequest(Request.Method.GET, url, listener);
+        StringRequest stringRequest = getStringRequest(Request.Method.GET, url, listener, null);
         VolleySingleton.getInstance().getRequestQueue().add(stringRequest);
     }
 
-    static protected void post(String url, Response.Listener<String> listener) {
-        StringRequest stringRequest = getStringRequest(Request.Method.POST, url, listener);
+    static protected void post(String url, Response.Listener<String> listener, final Map<String, String> params) {
+        StringRequest stringRequest = getStringRequest(Request.Method.POST, url, listener, params);
         VolleySingleton.getInstance().getRequestQueue().add(stringRequest);
     }
 
