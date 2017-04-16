@@ -2,6 +2,7 @@ package com.terry.librarysearch;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.Window;
@@ -122,13 +123,8 @@ public class LoginActivity extends Activity {
             @Override
             public void onSuccess(boolean success) {
                 if (success) {
-                    new AlertDialog.Builder(LoginActivity.this)
-                            .setMessage("로그인이 완료되었습니다.")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            }).setCancelable(false).show();
+                    startActivity(new Intent(LoginActivity.this, ReserveActivity.class));
+                    finish();
                 }
             }
 
