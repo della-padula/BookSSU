@@ -10,26 +10,35 @@ import android.widget.BaseAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlaceSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
 
     private final Context activity;
-    private String[] asr;
+    private List<String> labels = new ArrayList<>();
+    private List<Long> ids = new ArrayList<>();
 
-    public PlaceSpinnerAdapter(Context context, String[] asr) {
-        this.asr=asr;
+    public PlaceSpinnerAdapter(Context context, String[] sources) {
+        for (String source : sources) {
+            String[] separated = source.split("\\|");
+            labels.add(separated[0]);
+            ids.add(Long.parseLong(separated[1]));
+        }
+
         activity = context;
     }
 
     public int getCount() {
-        return asr.length;
+        return labels.size();
     }
 
     public Object getItem(int i) {
-        return asr[i];
+        return labels.get(i);
     }
 
     public long getItemId(int i) {
-        return (long)i;
+        return ids.get(i);
     }
 
     @Override
@@ -41,21 +50,20 @@ public class PlaceSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
         txt.setTypeface(typeface);
         txt.setTextSize(16);
         txt.setGravity(Gravity.CENTER_VERTICAL);
-        txt.setText(asr[position]);
+        txt.setText(labels.get(position));
         txt.setTextColor(Color.parseColor("#141414"));
         return  txt;
     }
 
-    public View getView(int i, View view, ViewGroup viewgroup) {
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         Typeface typeface = Typeface.createFromAsset(activity.getAssets(), activity.getString(R.string.naum_square_regular));
         TextView txt = new TextView(activity);
-        //txt.setGravity(Gravity.CENTER);
         txt.setTypeface(typeface);
         txt.setPadding(30, 16, 16, 16);
         txt.setTextSize(16);
-        txt.setText(asr[i]);
+        txt.setText(labels.get(position));
         txt.setTextColor(Color.parseColor("#141414"));
         return  txt;
     }
-
 }

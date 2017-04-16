@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="seminar_room">
-        <item>세미나룸1</item>
-        <item>세미나룸2</item>
-        <item>세미나룸3</item>
-        <item>세미나룸4</item>
-        <item>세미나룸5</item>
-        <item>세미나룸6</item>
-        <item>세미나룸7</item>
-        <item>세미나룸8</item>
-        <item>세미나룸9</item>
-        <item>세미나룸10</item>
-        <item>세미나룸11</item>
+        <item>세미나룸1|8</item>
+        <item>세미나룸2|11</item>
+        <item>세미나룸3|9</item>
+        <item>세미나룸4|10</item>
+        <item>세미나룸5|12</item>
+        <item>세미나룸6|14</item>
+        <item>세미나룸7|16</item>
+        <item>세미나룸8|17</item>
+        <item>세미나룸9|21</item>
+        <item>세미나룸10|26</item>
+        <item>세미나룸11|27</item>
     </string-array>
 </resources>
