@@ -1,6 +1,5 @@
 package com.terry.librarysearch;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,9 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.webkit.CookieManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,17 +38,19 @@ import butterknife.OnClick;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private static final String TAG = SearchActivity.class.getSimpleName();
+
     private final long FINISH_INTERVAL_TIME = 2000;
     private long   backPressedTime = 0;
 
     @BindView(R.id.searchContent)
-    private EditText searchContent;
+    EditText searchContent;
     @BindView(R.id.tv_version)
-    private TextView versionTextView;
+    TextView versionTextView;
     @BindView(R.id.searchButton)
-    private Button searchButton;
+    CustomFontButton searchButton;
     @BindView(R.id.reserveButton)
-    private CustomFontButton reserveBtn;
+    CustomFontButton reserveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +67,13 @@ public class SearchActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
+    }
 
-        final Context context = this;
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(searchContent.getText().toString().equals("")) {
-                    AlertDialog builder = new AlertDialog.Builder(SearchActivity.this)
+    @OnClick(R.id.searchButton)
+    public void onSearchProcess() {
+        Log.d(TAG, "onSearchProcess: Start");
+        if(searchContent.getText().toString().equals("")) {
+            AlertDialog builder = new AlertDialog.Builder(SearchActivity.this)
                     .setMessage("검색어를 입력해주세요.")
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
@@ -83,88 +82,87 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }).setCancelable(false).show();
 
-                    TextView textView = (TextView) builder.findViewById(android.R.id.message);
-                    TextView textView2 = (TextView) builder.findViewById(android.R.id.button1);
-                    Typeface face= Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
-                    textView.setTypeface(face);
-                    textView2.setTypeface(face);
+            TextView textView = (TextView) builder.findViewById(android.R.id.message);
+            TextView textView2 = (TextView) builder.findViewById(android.R.id.button1);
+            Typeface face= Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
+            textView.setTypeface(face);
+            textView2.setTypeface(face);
 
-                    CookieManager.getInstance().setAcceptCookie(true);
-                    WebkitCookieManagerProxy webkitCookieManagerProxy = new WebkitCookieManagerProxy(null, CookiePolicy.ACCEPT_ALL);
-                    CookieHandler.setDefault(webkitCookieManagerProxy);
+            CookieManager.getInstance().setAcceptCookie(true);
+            WebkitCookieManagerProxy webkitCookieManagerProxy = new WebkitCookieManagerProxy(null, CookiePolicy.ACCEPT_ALL);
+            CookieHandler.setDefault(webkitCookieManagerProxy);
 
-                    final RequestQueue requestQueue = Volley.newRequestQueue(context);
-                    requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Document document = Jsoup.parse(response);
-                            Element table = document.select("table.tbl_diary").first();
-                            if (table != null) {
-                                // TODO: 얻어온 세미나룸 목록 처리
-                            } else {
-                                requestQueue.add(new StringRequest(Request.Method.POST, "http://oasis.ssu.ac.kr/m/identity/Login.ax", new Response.Listener<String>() {
+            final RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Document document = Jsoup.parse(response);
+                    Element table = document.select("table.tbl_diary").first();
+                    if (table != null) {
+                        // TODO: 얻어온 세미나룸 목록 처리
+                    } else {
+                        requestQueue.add(new StringRequest(Request.Method.POST, "http://oasis.ssu.ac.kr/m/identity/Login.ax", new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Document document = Jsoup.parse(response);
+                                Element form = document.select("form[name=frmDamonmedia]").first();
+                                String action = form.attr("action");
+                                final Elements inputs = form.select("input");
+                                requestQueue.add(new StringRequest(Request.Method.POST, action, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Document document = Jsoup.parse(response);
-                                        Element form = document.select("form[name=frmDamonmedia]").first();
-                                        String action = form.attr("action");
-                                        final Elements inputs = form.select("input");
-                                        requestQueue.add(new StringRequest(Request.Method.POST, action, new Response.Listener<String>() {
+                                        requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/m/PyxisRedirect.ax?home=http://oasis.ssu.ac.kr&target=/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {
-                                                requestQueue.add(new StringRequest(Request.Method.GET, "http://oasis.ssu.ac.kr/m/PyxisRedirect.ax?home=http://oasis.ssu.ac.kr&target=/service/StudyRoom.Cal.ax", new Response.Listener<String>() {
+                                                final String SPLITTER = "location.href=\"";
+                                                int start = response.indexOf(SPLITTER) + SPLITTER.length();
+                                                int end = response.indexOf("\"", start);
+                                                response = response.substring(start, end);
+
+                                                requestQueue.add(new StringRequest(Request.Method.GET, response, new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
-                                                        final String SPLITTER = "location.href=\"";
-                                                        int start = response.indexOf(SPLITTER) + SPLITTER.length();
-                                                        int end = response.indexOf("\"", start);
-                                                        response = response.substring(start, end);
-
-                                                        requestQueue.add(new StringRequest(Request.Method.GET, response, new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response) {
-                                                                // TODO: 로그인 완료 처리
-                                                            }
-                                                        }, null));
+                                                        // TODO: 로그인 완료 처리
                                                     }
                                                 }, null));
                                             }
-                                        }, null) {
-                                            @Override
-                                            protected Map<String,String> getParams(){
-                                                Map<String, String> params = new HashMap<String, String>();
-                                                for (Element input : inputs) {
-                                                    params.put(input.attr("name"), input.attr("value"));
-                                                }
-                                                return params;
-                                            }
-                                        });
+                                        }, null));
                                     }
                                 }, null) {
                                     @Override
                                     protected Map<String,String> getParams(){
                                         Map<String, String> params = new HashMap<String, String>();
-                                        params.put("userID", "학번");
-                                        params.put("password", "비밀번호");
-                                        params.put("LOGIN_MODE", "LOGIN");
+                                        for (Element input : inputs) {
+                                            params.put(input.attr("name"), input.attr("value"));
+                                        }
                                         return params;
                                     }
                                 });
                             }
-                        }
-                    }, null));
-                } else {
-                    Intent intent = new Intent(SearchActivity.this, ResultListActivity.class);
-                    intent.putExtra("content", searchContent.getText().toString());
-                    searchContent.setText("");
-                    startActivity(intent);
+                        }, null) {
+                            @Override
+                            protected Map<String,String> getParams(){
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("userID", "학번");
+                                params.put("password", "비밀번호");
+                                params.put("LOGIN_MODE", "LOGIN");
+                                return params;
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            }, null));
+        } else {
+            Intent intent = new Intent(SearchActivity.this, ResultListActivity.class);
+            intent.putExtra("content", searchContent.getText().toString());
+            searchContent.setText("");
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.reserveButton)
-    private void reserveProcess() {
+    public void onReserveProcess() {
+        Log.d(TAG, "onReserveProcess: Start");
         //Dummy Code : Open Login Activity
         startActivity(new Intent(SearchActivity.this, LoginActivity.class));
     }

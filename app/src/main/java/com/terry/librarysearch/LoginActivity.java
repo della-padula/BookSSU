@@ -7,6 +7,7 @@ import android.view.Window;
 
 import com.terry.librarysearch.CustomView.CustomFontButton;
 import com.terry.librarysearch.CustomView.CustomFontEditText;
+import com.terry.librarysearch.utils.AsteriskPasswordTransformationMethod;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +28,12 @@ public class LoginActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        pwEditText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
     }
 
     @OnClick(R.id.loginButton)
-    private void loginValidate() {
+    public void loginValidate() {
 
     }
 }
