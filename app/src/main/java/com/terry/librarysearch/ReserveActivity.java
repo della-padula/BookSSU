@@ -82,7 +82,7 @@ public class ReserveActivity extends AppCompatActivity {
         placeSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(ReserveActivity.this, "Position : " + position, Toast.LENGTH_SHORT).show();
+                refreshRecyclerView();
             }
 
             @Override

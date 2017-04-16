@@ -73,7 +73,7 @@
 
             <com.terry.librarysearch.CustomView.CustomFontTextView
                 android:id="@+id/tv_selected_date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="14dp"
                 android:gravity="center_vertical"
@@ -81,7 +81,8 @@
                 android:text="2017-04-15"
                 android:textColor="#101010"
                 android:textSize="16dp"
-                app:customFont="@string/naum_square_bold" />
+                app:customFont="@string/naum_square_bold"
+                android:layout_toStartOf="@+id/ib_date" />
 
             <ImageButton
                 android:id="@+id/ib_date"
