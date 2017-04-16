@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="false"
-            android:text="숭실대학교 중앙도서관 도서 검색 어플리케이션"
+            android:text="숭실대학교 중앙도서관 도서 검색 및 간편 예약 어플리케이션"
             android:textColor="@color/colorPrimary"
             android:textSize="11.6sp"
             app:customFont="@string/naum_square_bold" />
@@ -128,11 +128,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/content_layout"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         app:customFont="@string/naum_square_regular"
         android:layout_marginBottom="51dp"
         android:background="#00ffffff"
         android:visibility="gone"
+        android:textColor="#808080"
         android:text="로그아웃" />
 
 </RelativeLayout>

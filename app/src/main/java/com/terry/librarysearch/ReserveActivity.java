@@ -121,6 +121,9 @@ public class ReserveActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             String selectedDateString = year + "-" + addZeroDate(monthOfYear + 1) + "-" + addZeroDate(dayOfMonth);
 
+            Calendar selectedDateCal = Calendar.getInstance();
+            Calendar todayCal = Calendar.getInstance();
+
             if (today.compareTo(selectedDateString) > 0) {
                 // 오늘 이전 날짜일 경우
                 AlertDialog builder = new AlertDialog.Builder(ReserveActivity.this)
@@ -139,8 +142,51 @@ public class ReserveActivity extends AppCompatActivity {
                 textView2.setTypeface(face);
             } else {
                 // 오늘 날짜와 같거나 오늘 이후 날짜의 경우
-                selectedDate.setText(selectedDateString);
-                refreshRecyclerView();
+                selectedDateCal.set(year, monthOfYear, dayOfMonth);
+                todayCal.set(year, month, date);
+
+                long diffSec = (todayCal.getTimeInMillis() - selectedDateCal.getTimeInMillis()) / 1000;
+                long diffDay = diffSec/(60 * 60 * 24);
+
+                int dayNum = selectedDateCal.get(Calendar.DAY_OF_WEEK) ;
+                Log.d(TAG, "onDateSet: dayNum : " + dayNum + ", diffDay : " + diffDay);
+
+                if(Math.abs(diffDay) < 8) {
+                    if(dayNum == 1 || dayNum == 7) {
+                        AlertDialog builder = new AlertDialog.Builder(ReserveActivity.this)
+                                .setMessage("주말에는 예약이 불가능합니다.")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        selectedDate.setText(today);
+                                    }
+                                }).setCancelable(false).show();
+
+                        TextView textView = (TextView) builder.findViewById(android.R.id.message);
+                        TextView textView2 = (TextView) builder.findViewById(android.R.id.button1);
+                        Typeface face = Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
+                        textView.setTypeface(face);
+                        textView2.setTypeface(face);
+                    } else {
+                        selectedDate.setText(selectedDateString);
+                        refreshRecyclerView();
+                    }
+                } else {
+                    AlertDialog builder = new AlertDialog.Builder(ReserveActivity.this)
+                            .setMessage("7일 이전에만 예약이 가능합니다.")
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    selectedDate.setText(today);
+                                }
+                            }).setCancelable(false).show();
+
+                    TextView textView = (TextView) builder.findViewById(android.R.id.message);
+                    TextView textView2 = (TextView) builder.findViewById(android.R.id.button1);
+                    Typeface face = Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
+                    textView.setTypeface(face);
+                    textView2.setTypeface(face);
+                }
             }
         }
     };
