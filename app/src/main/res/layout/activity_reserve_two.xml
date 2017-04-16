@@ -4,6 +4,340 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.terry.librarysearch.ReserveTwoActivity">
+    android:background="@color/colorWhite"
+    tools:context="com.terry.librarysearch.ReserveActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="17dp"
+            android:orientation="vertical">
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="장소 선택"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.3dp"
+                app:customFont="@string/naum_square_bold" />
+
+            <LinearLayout
+                android:id="@+id/place_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_place"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="시설명"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="이름"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="학번"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="휴대전화"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="이용날짜"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="이용시간"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="세미나룸10"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="홍길동"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="20141234"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="01012341234"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="2017-04-15"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontTextView
+                        android:id="@+id/tv_detail_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:text="09:00-10:00\n10:00-11:00\n11:00-12:00"
+                        android:textColor="#808080"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_dongban"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/place_layout"
+                android:layout_marginTop="15dp"
+                android:text="동반 이용자 (본인 제외 3-7명)"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.3dp"
+                app:customFont="@string/naum_square_bold" />
+
+            <RelativeLayout
+                android:id="@+id/dongban_layout"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@+id/tv_dongban"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_toStartOf="@+id/imageButton2"
+                    android:orientation="horizontal">
+
+                    <com.terry.librarysearch.CustomView.CustomFontEditText
+                        android:id="@+id/et_dongban_id"
+                        android:layout_width="140dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background"
+                        android:hint="학번"
+                        android:padding="8dp"
+                        android:textColor="#101010"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                    <com.terry.librarysearch.CustomView.CustomFontEditText
+                        android:id="@+id/et_dongban_name"
+                        android:layout_width="140dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/spinner_background"
+                        android:hint="이름"
+                        android:padding="8dp"
+                        android:textColor="#101010"
+                        android:textSize="13.3sp"
+                        app:customFont="@string/naum_square_regular" />
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1"
+                    android:background="#00ffffff"
+                    android:src="@drawable/add_button" />
+
+            </RelativeLayout>
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_dongban_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dongban_layout"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/spinner_background"
+                android:lineSpacingExtra="4dp"
+                android:padding="9dp"
+                android:text="20151234 홍길당\n20161234 홍길산\n20171234 홍길송"
+                android:textColor="#808080"
+                android:textSize="13.3sp"
+                app:customFont="@string/naum_square_regular" />
+
+            <RelativeLayout
+                android:id="@+id/bipoom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dongban_list"
+                android:layout_marginTop="15dp">
+
+                <Switch
+                    android:id="@+id/switch_bipoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true" />
+
+                <com.terry.librarysearch.CustomView.CustomFontTextView
+                    android:id="@+id/tv_bipoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:text="비품 사용"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13.3dp"
+                    app:customFont="@string/naum_square_bold" />
+
+
+            </RelativeLayout>
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_bipoom_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bipoom_layout"
+                android:layout_marginTop="10dp"
+                android:text="비품 정보"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.3dp"
+                app:customFont="@string/naum_square_bold" />
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_bipoom_name_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_bipoom_name"
+                android:layout_alignBottom="@+id/tv_bipoom_name"
+                android:layout_marginLeft="15dp"
+                android:layout_toEndOf="@+id/tv_bipoom_name"
+                android:text="화이트보드"
+                android:textColor="#808080"
+                android:textSize="13.3dp"
+                app:customFont="@string/naum_square_regular" />
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_usage_perpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_bipoom_name"
+                android:layout_marginTop="10dp"
+                android:text="사용 목적"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13.3dp"
+                app:customFont="@string/naum_square_bold" />
+
+            <com.terry.librarysearch.CustomView.CustomFontEditText
+                android:id="@+id/et_usage_perpose"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/tv_usage_perpose"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/spinner_background"
+                android:lineSpacingExtra="4dp"
+                android:hint="사용 목적을 입력해주세요."
+                android:padding="9dp"
+                android:textColor="#808080"
+                android:textSize="13.3sp"
+                app:customFont="@string/naum_square_regular" />
+
+            <com.terry.librarysearch.CustomView.CustomFontButton
+                android:id="@+id/summitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_usage_perpose"
+                android:layout_marginTop="14dp"
+                android:background="@color/colorPrimary"
+                android:text="예약하기"
+                android:textColor="@color/colorWhite"
+                android:textSize="16dp"
+                app:customFont="@string/naum_square_bold" />
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
