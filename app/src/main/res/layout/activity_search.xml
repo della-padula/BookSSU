@@ -131,7 +131,7 @@
         android:layout_alignParentEnd="true"
         app:customFont="@string/naum_square_regular"
         android:layout_marginBottom="51dp"
-        android:background="none"
+        android:background="#00ffffff"
         android:visibility="gone"
         android:text="로그아웃" />
 
