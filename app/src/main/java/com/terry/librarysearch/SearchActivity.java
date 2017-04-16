@@ -104,6 +104,11 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.logoutButton)
+    public void onLogoutClick() {
+        Log.d(TAG, "onLogoutClick: Logout");
+    }
+
     @OnClick(R.id.reserveButton)
     public void onReserveProcess() {
         reserveBtn.setEnabled(false);
