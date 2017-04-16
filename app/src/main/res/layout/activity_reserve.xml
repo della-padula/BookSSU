@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.terry.librarysearch.ReserveActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="17dp"
+        android:orientation="vertical">
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="장소 선택"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13.3dp"
+            app:customFont="@string/naum_square_bold" />
+
+        <LinearLayout
+            android:id="@+id/place_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_place"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/spinner_background"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/meal_select_rest"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/spinner_arrow_background"
+                android:drawableEnd="@drawable/triangle"
+                android:drawablePadding="10dp"
+                android:entries="@array/seminar_room" />
+        </LinearLayout>
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/place_layout"
+            android:layout_marginTop="15dp"
+            android:text="일자 선택"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13.3dp"
+            app:customFont="@string/naum_square_bold" />
+
+        <RelativeLayout
+            android:id="@+id/date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@+id/tv_date"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/spinner_background">
+
+            <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="14dp"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:text="2017-04-15"
+                android:textColor="#101010"
+                android:textSize="16dp"
+                app:customFont="@string/naum_square_bold" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="#00ffffff"
+                android:src="@drawable/ic_date_range_black_48_dp" />
+        </RelativeLayout>
+
+        <com.terry.librarysearch.CustomView.CustomFontTextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_layout"
+            android:layout_marginTop="15dp"
+            android:text="시간 선택"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13.3dp"
+            app:customFont="@string/naum_square_bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/customFontButton"
+            android:layout_below="@+id/tv_time"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/spinner_background">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/time_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"/>
+
+        </RelativeLayout>
+
+        <com.terry.librarysearch.CustomView.CustomFontButton
+            android:id="@+id/customFontButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="14dp"
+            android:background="@color/colorPrimary"
+            android:text="다음으로"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp"
+            app:customFont="@string/naum_square_bold" />
+
+    </RelativeLayout>
+</RelativeLayout>

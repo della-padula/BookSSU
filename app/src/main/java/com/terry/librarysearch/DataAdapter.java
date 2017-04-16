@@ -123,8 +123,8 @@ public class DataAdapter extends RecyclerView.Adapter {
 
         public ResultItemViewHolder(View v) {
             super(v);
-            tvName = (CustomFontTextView) v.findViewById(R.id.tvCodeLocation);
-            tvAuthor = (CustomFontTextView) v.findViewById(R.id.tvChunggu);
+            tvName = (CustomFontTextView) v.findViewById(R.id.tvTimeInfo);
+            tvAuthor = (CustomFontTextView) v.findViewById(R.id.tvReservedPerson);
             ivBookImage = (ImageView) v.findViewById(R.id.ivBook);
             ivStatus = (ImageView) v.findViewById(R.id.ivStatus);
 

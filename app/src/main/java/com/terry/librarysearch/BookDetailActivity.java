@@ -189,8 +189,8 @@ public class BookDetailActivity extends Activity {
             public ViewHolder(View view) {
                 super(view);
                 imageView = (ImageView) view.findViewById(R.id.ivStatus);
-                textViewCodeLocation = (TextView) view.findViewById(R.id.tvCodeLocation);
-                textViewChunggu = (TextView) view.findViewById(R.id.tvChunggu);
+                textViewCodeLocation = (TextView) view.findViewById(R.id.tvTimeInfo);
+                textViewChunggu = (TextView) view.findViewById(R.id.tvReservedPerson);
             }
         }
     }

@@ -29,8 +29,11 @@
         <activity
             android:name=".BookDetailActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity android:name=".ReserveActivity" />
+        <activity android:name=".ReserveTwoActivity"></activity>
     </application>
 
 </manifest>
