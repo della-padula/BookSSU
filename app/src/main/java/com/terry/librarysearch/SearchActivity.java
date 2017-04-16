@@ -23,6 +23,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.terry.librarysearch.CustomView.CustomFontButton;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,23 +35,31 @@ import java.net.CookiePolicy;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class SearchActivity extends AppCompatActivity {
 
     private final long FINISH_INTERVAL_TIME = 2000;
     private long   backPressedTime = 0;
+
+    @BindView(R.id.searchContent)
     private EditText searchContent;
+    @BindView(R.id.tv_version)
     private TextView versionTextView;
+    @BindView(R.id.searchButton)
     private Button searchButton;
+    @BindView(R.id.reserveButton)
+    private CustomFontButton reserveBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        ButterKnife.bind(this);
 
-        searchContent = (EditText) findViewById(R.id.searchContent);
-        searchButton = (Button) findViewById(R.id.searchButton);
-        versionTextView = (TextView) findViewById(R.id.tv_version);
-
+        //Playstore Version Valid Check
         new MommooAsyncTask().execute();
 
         try {
@@ -152,6 +161,12 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @OnClick(R.id.reserveButton)
+    private void reserveProcess() {
+        //Dummy Code : Open Login Activity
+        startActivity(new Intent(SearchActivity.this, LoginActivity.class));
     }
 
     @Override
