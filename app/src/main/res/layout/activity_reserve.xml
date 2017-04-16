@@ -38,7 +38,7 @@
             android:orientation="vertical">
 
             <Spinner
-                android:id="@+id/meal_select_rest"
+                android:id="@+id/place_select"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="2dp"
@@ -72,6 +72,7 @@
             android:background="@drawable/spinner_background">
 
             <com.terry.librarysearch.CustomView.CustomFontTextView
+                android:id="@+id/tv_selected_date"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="14dp"
@@ -83,6 +84,7 @@
                 app:customFont="@string/naum_square_bold" />
 
             <ImageButton
+                android:id="@+id/ib_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

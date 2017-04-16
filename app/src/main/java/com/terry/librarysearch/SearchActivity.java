@@ -83,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
     public void onReserveProcess() {
         Log.d(TAG, "onReserveProcess: Start");
         //Dummy Code : Open Login Activity
-        startActivity(new Intent(SearchActivity.this, LoginActivity.class));
+        startActivity(new Intent(SearchActivity.this, ReserveActivity.class));
     }
 
     @Override
