@@ -3,13 +3,16 @@ package com.terry.librarysearch;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +42,8 @@ public class ReserveActivity extends AppCompatActivity {
     @BindView(R.id.nextButton)
     CustomFontButton nextButton;
 
+    private ActionBar actionBar;
+
     private String today;
     private int year, month, date;
 
@@ -47,6 +52,23 @@ public class ReserveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserve);
         ButterKnife.bind(this);
+
+        actionBar = getSupportActionBar();
+
+        final TextView TextViewNewFont = new TextView(ReserveActivity.this);
+        FrameLayout.LayoutParams layoutparams = new FrameLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        TextViewNewFont.setLayoutParams(layoutparams);
+        TextViewNewFont.setText("세미나룸 예약");
+
+        TextViewNewFont.setTextColor(getResources().getColor(R.color.colorWhite));
+        TextViewNewFont.setTextSize(18);
+
+        Typeface FontLoaderTypeface = Typeface.createFromAsset(getAssets(), getString(R.string.naum_square_bold));
+        TextViewNewFont.setTypeface(FontLoaderTypeface);
+
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(TextViewNewFont);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // Initialize Date TextView
         Calendar calendar = Calendar.getInstance();
@@ -81,6 +103,17 @@ public class ReserveActivity extends AppCompatActivity {
     @OnClick(R.id.nextButton)
     public void nextActivity() {
         // Next Button 눌렀을 경우
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
