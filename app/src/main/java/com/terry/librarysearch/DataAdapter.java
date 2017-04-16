@@ -20,7 +20,7 @@ public class DataAdapter extends RecyclerView.Adapter {
     private final int VIEW_PROG = 0;
 
     private List<ResultItem> resultItemList;
-    private int visibleThreshold = 1;
+    private int visibleThreshold = 4;
     private int lastVisibleItem, totalItemCount;
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
