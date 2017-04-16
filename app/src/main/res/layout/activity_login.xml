@@ -46,7 +46,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/login_edittext_bg"
         android:hint="도서관 비밀번호를 입력해주세요."
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textColor="#d8d8d8"
         android:textColorHint="#d8d8d8"
         android:textSize="14sp"
