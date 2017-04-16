@@ -80,11 +80,26 @@
             android:textColor="@android:color/white"
             app:customFont="@string/naum_square_bold" />
 
+        <com.terry.librarysearch.CustomView.CustomFontButton
+            android:id="@+id/reserveButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/searchButton"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/reserve_button_bg"
+            android:text="세미나룸 예약"
+            android:textColor="@color/colorPrimary"
+            app:customFont="@string/naum_square_bold" />
+
         <com.terry.librarysearch.CustomView.CustomFontTextView
             android:id="@+id/tv_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/searchButton"
+            android:layout_below="@+id/reserveButton"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="false"
             android:layout_marginTop="7dp"
@@ -103,9 +118,21 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="9dp"
-        android:text="개발자 : 김태인(컴퓨터학부 14)"
+        android:text="개발자 : 김태인(컴퓨터학부 14) | 정재봉(컴퓨터학부 07)"
         android:textColor="#606060"
         android:textSize="10sp"
         app:customFont="@string/naum_square_regular" />
+
+    <com.terry.librarysearch.CustomView.CustomFontButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/content_layout"
+        android:layout_alignParentEnd="true"
+        app:customFont="@string/naum_square_regular"
+        android:layout_marginBottom="51dp"
+        android:background="none"
+        android:visibility="gone"
+        android:text="로그아웃" />
 
 </RelativeLayout>
