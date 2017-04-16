@@ -30,7 +30,7 @@ public class LoginActivity extends Activity {
     }
 
     @OnClick(R.id.loginButton)
-    private void loginValidate() {
+    public void loginValidate() {
 
     }
 }
