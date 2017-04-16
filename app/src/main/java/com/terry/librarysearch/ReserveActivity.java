@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -22,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static java.security.AccessController.getContext;
+
 public class ReserveActivity extends AppCompatActivity {
 
     private static String TAG = ReserveActivity.class.getSimpleName();
@@ -36,22 +40,39 @@ public class ReserveActivity extends AppCompatActivity {
     CustomFontButton nextButton;
 
     private String today;
+    private int year, month, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserve);
         ButterKnife.bind(this);
+
+        // Initialize Date TextView
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(calendar.YEAR);
+        month = calendar.get(calendar.MONTH);
+        date = calendar.get(calendar.DATE);
+        today = year + "-" + addZeroDate(month + 1) + "-" + addZeroDate(date);
+        selectedDate.setText(today);
+
+        placeSelect.setAdapter(new PlaceSpinnerAdapter(this, getResources().getStringArray(R.array.seminar_room)));
+        placeSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(ReserveActivity.this, "Position : " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @OnClick(R.id.ib_date)
     public void showDateSelectDialog() {
         // Date Select 눌렀을 경우
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(calendar.YEAR);
-        int month = calendar.get(calendar.MONTH);
-        int date = calendar.get(calendar.DATE);
-        today = year + "-" + addZeroDate(month + 1) + "-" + addZeroDate(date);
 
         DatePickerDialog dialog = new DatePickerDialog(this, listener, year, month, date);
         dialog.show();
@@ -85,9 +106,9 @@ public class ReserveActivity extends AppCompatActivity {
                 textView2.setTypeface(face);
             } else {
                 // 오늘 날짜와 같거나 오늘 이후 날짜의 경우
+                selectedDate.setText(selectedDateString);
                 refreshRecyclerView();
             }
-            selectedDate.setText(selectedDateString);
         }
     };
 
@@ -101,5 +122,6 @@ public class ReserveActivity extends AppCompatActivity {
 
     private void refreshRecyclerView() {
         // 리스트 받아와서 적용하는 부분
+
     }
 }
