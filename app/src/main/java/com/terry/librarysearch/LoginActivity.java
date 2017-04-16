@@ -1,13 +1,16 @@
 package com.terry.librarysearch;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.terry.librarysearch.CustomView.CustomFontButton;
 import com.terry.librarysearch.CustomView.CustomFontEditText;
 import com.terry.librarysearch.utils.AsteriskPasswordTransformationMethod;
+import com.terry.librarysearch.utils.VolleySingleton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +33,20 @@ public class LoginActivity extends Activity {
         ButterKnife.bind(this);
 
         pwEditText.setTransformationMethod(new AsteriskPasswordTransformationMethod());
+    }
+
+    static protected StringRequest getStringRequest(int method, String url, Response.Listener<String> listener) {
+        return new StringRequest(method, url, listener, null);
+    }
+
+    static protected void get(String url, Response.Listener<String> listener) {
+        StringRequest stringRequest = getStringRequest(Request.Method.GET, url, listener);
+        VolleySingleton.getInstance().getRequestQueue().add(stringRequest);
+    }
+
+    static protected void post(String url, Response.Listener<String> listener) {
+        StringRequest stringRequest = getStringRequest(Request.Method.POST, url, listener);
+        VolleySingleton.getInstance().getRequestQueue().add(stringRequest);
     }
 
     @OnClick(R.id.loginButton)
